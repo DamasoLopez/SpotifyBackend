@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<title></title>
+	</head>
+<body>
+	
+		<h1 th:text="${titulo}"></h1>
+		<div th:if="${songlist.isEmpty()}">No hay usuarios en la lista</div>
+		<table th:if="${not songlist.isEmpty()}">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="usuario:${songlist}">
+				<td th:text="${usuario}"></td>
+				</tr>
+			</tbody>
+		</table>
+</body>
+</html>
