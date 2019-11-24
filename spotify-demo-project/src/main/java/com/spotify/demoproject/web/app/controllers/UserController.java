@@ -9,29 +9,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.bind.annotation.RestController;
-import com.spotify.demoproject.web.app.authentication.UserAunthentication;
-import com.spotify.demoproject.web.app.authentication.UserAuthenticationDaoImpl;
+
+import com.spotify.demoproject.web.app.models.dao.impl.GetUserProfileDaoImpl;
+import com.spotify.demoproject.web.app.models.dao.impl.UserAuthenticationDaoImpl;
 import com.spotify.demoproject.web.app.models.entity.TokenAuthenticate;
 import com.spotify.demoproject.web.app.models.services.IUserServices;
 
 @RestController
-@RequestMapping("/api")
+@CrossOrigin(origins= "*")
+@RequestMapping("/api/user")
 public class UserController {
-	
-	@Autowired
-	UserAunthentication userAuthentication;
 	
 	@Autowired
 	IUserServices userServices;
 	@Autowired
 	UserAuthenticationDaoImpl userAuthenticationDaoImpl;
-	
+	@Autowired
+	GetUserProfileDaoImpl getUserProfileDaoImpl;
 	
 	
 	@RequestMapping(path="/login",produces="application/json")
@@ -42,12 +40,21 @@ public class UserController {
 		return response;
 	}
 	
-	@GetMapping(path="/loginSuccesfull/{code}",consumes="application/json",produces="application/json")
-	public  TokenAuthenticate loginSuccesfull(@PathVariable String code) throws Exception {
-		System.out.println("holaaa");
-		userAuthenticationDaoImpl.GenerateTokkenAccesAuthentication(code);
+	@GetMapping(path="/loginSuccesfull/{code}",produces="application/json")
+	public  Map<String,String> loginSuccesfull(@PathVariable String code) throws Exception {
 		
-		return null;
+		
+		
+		
+		return userAuthenticationDaoImpl.GenerateTokkenAccesAuthentication(code);
+	}
+	@GetMapping(path="/getUserId/{token}/{refreshToken}",produces="application/json")
+	public  Map<String,String> getUserId(@PathVariable String token,@PathVariable String refreshToken) throws Exception {
+		
+		
+		
+		
+		return getUserProfileDaoImpl.getUser(refreshToken, token);
 	}
 	
 	
