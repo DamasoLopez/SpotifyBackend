@@ -18,7 +18,14 @@ public class UserDaoImpl {
 
 	@Transactional
 	public <S extends UserSearchTracks> S save(S entity) {
-		em.persist(entity);
+		em.getTransaction().begin();
+	    
+	        em.persist(entity);
+	       
+	        em.flush();
+	    
+	    // commit transaction at all
+	    em.getTransaction().commit();
 		return null;
 	}
 

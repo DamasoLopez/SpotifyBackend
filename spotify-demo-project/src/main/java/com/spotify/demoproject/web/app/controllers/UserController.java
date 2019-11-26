@@ -1,6 +1,5 @@
 package com.spotify.demoproject.web.app.controllers;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,43 +19,36 @@ import com.spotify.demoproject.web.app.models.entity.TokenAuthenticate;
 import com.spotify.demoproject.web.app.models.services.IUserServices;
 
 @RestController
-@CrossOrigin(origins= "*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/user")
 public class UserController {
-	
+
 	@Autowired
 	IUserServices userServices;
 	@Autowired
 	UserAuthenticationDaoImpl userAuthenticationDaoImpl;
 	@Autowired
 	GetUserProfileDaoImpl getUserProfileDaoImpl;
-	
-	
-	@RequestMapping(path="/login",produces="application/json")
-	public  Map<String,String> login(Model model) {
-		Map<String,String> response= new HashMap<String,String>();
-		
-		response.put("url",userAuthenticationDaoImpl.GenerateUriAuthentication());
+
+	@RequestMapping(path = "/login", produces = "application/json")
+	public Map<String, String> login(Model model) {
+		Map<String, String> response = new HashMap<String, String>();
+
+		response.put("url", userAuthenticationDaoImpl.GenerateUriAuthentication());
 		return response;
 	}
-	
-	@GetMapping(path="/loginSuccesfull/{code}",produces="application/json")
-	public  Map<String,String> loginSuccesfull(@PathVariable String code) throws Exception {
-		
-		
-		
-		
-		return userAuthenticationDaoImpl.GenerateTokkenAccesAuthentication(code);
+
+	@GetMapping(path = "/loginSuccesfull/{code}", produces = "application/json")
+	public Map<String, String> loginSuccesfull(@PathVariable String code) throws Exception {
+
+		return userAuthenticationDaoImpl.GenerateTokenAccesAuthentication(code);
 	}
-	@GetMapping(path="/getUserId/{token}/{refreshToken}",produces="application/json")
-	public  Map<String,String> getUserId(@PathVariable String token,@PathVariable String refreshToken) throws Exception {
-		
-		
-		
+
+	@GetMapping(path = "/getUserId/{token}/{refreshToken}", produces = "application/json")
+	public Map<String, String> getUserId(@PathVariable String token, @PathVariable String refreshToken)
+			throws Exception {
 		
 		return getUserProfileDaoImpl.getUser(refreshToken, token);
 	}
-	
-	
-	
+
 }

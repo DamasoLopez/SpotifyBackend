@@ -47,9 +47,7 @@ public Map<String,String> getUser(String token,String AccesToken)throws Exceptio
             // convert JSON string to Map
             Map<String, String> map = mapper.readValue(json, Map.class);
 
-			// it works
-            //Map<String, String> map = mapper.readValue(json, new TypeReference<Map<String, String>>() {});
-           
+			
             tokens.put("userId", map.get("id"));
         } catch (IOException e) {
             e.printStackTrace();

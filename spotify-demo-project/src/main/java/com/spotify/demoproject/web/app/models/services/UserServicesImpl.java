@@ -14,7 +14,7 @@ import com.spotify.demoproject.web.app.models.entity.UserSearchTracks;
 @Service
 public class UserServicesImpl implements IUserServices{
 	@Autowired
-	UserDaoImpl userDao;
+	IUserDao userDao;
 	
 	@Transactional(readOnly=true)
 	public List<UserSearchTracks> findAll(){
